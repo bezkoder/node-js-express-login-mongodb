@@ -6,11 +6,14 @@ const dbConfig = require("./app/config/db.config");
 
 const app = express();
 
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
+/* for Angular Client (withCredentials) */
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: ["http://localhost:8081"],
+//   })
+// );
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -21,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cookieSession({
     name: "bezkoder-session",
-    secret: "COOKIE_SECRET", // should use as secret environment variable
+    keys: ["COOKIE_SECRET"], // should use as secret environment variable
     httpOnly: true
   })
 );

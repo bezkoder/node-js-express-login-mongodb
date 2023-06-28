@@ -86,9 +86,13 @@ exports.signin = (req, res) => {
         return res.status(401).send({ message: "Invalid Password!" });
       }
 
-      var token = jwt.sign({ id: user.id }, config.secret, {
-        expiresIn: 86400, // 24 hours
-      });
+      const token = jwt.sign({ id: user.id },
+                              config.secret,
+                              {
+                                algorithm: 'HS256',
+                                allowInsecureKeySizes: true,
+                                expiresIn: 86400, // 24 hours
+                              });
 
       var authorities = [];
 
